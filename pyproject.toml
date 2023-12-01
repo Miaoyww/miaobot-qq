@@ -1,0 +1,16 @@
+[project]
+name = "miaobot-qq"
+version = "0.1.0"
+description = "miaobot-qq"
+readme = "README.md"
+authors = ["Miaoyww"]
+requires-python = ">=3.8, <4.0"
+
+[tool.nonebot]
+adapters = [
+    { name = "QQ", module_name = "nonebot.adapters.qq" },
+    {name = "OneBot V11", module_name = "nonebot.adapters.onebot.v11"}
+]
+plugins = []
+plugin_dirs = ["src/plugins"]
+builtin_plugins = ["echo"]
