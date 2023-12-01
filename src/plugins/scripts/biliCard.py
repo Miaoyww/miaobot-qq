@@ -5,6 +5,7 @@ from decimal import Decimal
 from urllib import request
 
 import aiohttp
+from aiohttp import ClientTimeout
 from nonebot import on_command, logger
 from nonebot.adapters.qq import *
 from nonebot.params import CommandArg
@@ -12,7 +13,7 @@ from nonebot.plugin import PluginMetadata
 
 from src.service.plugin_type import PluginType
 
-biliCard = on_command("biliCard", block=True, priority=1)
+biliCard = on_command("biliCard", block=False, priority=1)
 
 __plugin_meta__ = PluginMetadata(
     name='bili视频卡片',
@@ -46,14 +47,16 @@ async def _handle(bot: Bot, event: Event, arg: Message = CommandArg()):
     logger.info(f"得到aid: {aid}")
     response_body: dict
     try:
-        async with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession(timeout=ClientTimeout(total=10)) as session:
             async with session.get(f"http://api.bilibili.com/x/web-interface/view?aid={aid}",
-                                   headers=headers) as response:
+                                   headers=headers, ) as response:
                 response_body = json.loads(
                     await response.text())["data"]
     except KeyError:
-        await bot.send_group_msg(group_id=event.group_id, message=f"[CQ:at,qq={event.user_id}] 你输入的视频不存在",
-                                 auto_escape=False)
+        await bot.send_group_msg(event, message=MessageSegment.text("你输入的Bv/Av不存在~"))
+        return
+    except ClientTimeout:
+        await bot.send_group_msg(event, message=MessageSegment.text("请求超时了, 若尝试多次后无效请联系管理员~"))
         return
     video_info = {
         "title": response_body["title"],
