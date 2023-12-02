@@ -41,14 +41,14 @@ async def get_special_reply_result(text: str, only_text=False) -> Message | Mess
     if "骂我" or "骂老子" in text:
         rand_choice = random.choice(dinggong_lst)
         text = rand_choice.split("_")[1].split(".")[0]
-        return (await record(rand_choice, "dinggong") if only_text is True else None) + MessageSegment.text(text)
+        return (await record(rand_choice, "dinggong") if only_text is False else None) + MessageSegment.text(text)
     if 0.3 < random.random() < 0.9:
         rand_choice = random.choice(replies[" "]) if len(text.replace(" ", "")) == 0 else None
         if type(rand_choice) is list:
             rand_choice = random.choice(rand_choice)
             if type(rand_choice) is dict:
                 rply_text = MessageSegment.text(rand_choice["text"])
-                rply_song = record(rand_choice["path"], "songs") if only_text is True else None
+                rply_song = record(rand_choice["path"], "songs") if only_text is False else None
                 return rply_text + await rply_song
             else:
                 return MessageSegment.text(rand_choice)

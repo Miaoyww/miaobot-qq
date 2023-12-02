@@ -32,6 +32,7 @@ async def _(bot: Bot, evt: MessageEvent, only_text=False, times=3):
                 except ActionFailed:
                     logger.error(f"回复操作失败，正在尝试第{4 - times}次")
                     await _(bot, evt, only_text=True, times=times - 1)
+                    return
         else:
             await bot.send(evt, message=result)
     else:

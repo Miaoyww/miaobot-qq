@@ -13,23 +13,24 @@ from nonebot.plugin import PluginMetadata
 
 from src.service.plugin_type import PluginType
 
-biliCard = on_command("biliCard", block=False, priority=1)
+biliCard = on_command("biliCard", block=True, priority=1)
 
 __plugin_meta__ = PluginMetadata(
     name='bili视频卡片',
     description='获取Bilibili视频的详情信息',
     usage='''使用方法: .biliCard <Bvid>|<Aid>''',
-    extra={"type": PluginType.NORMAL_PLUGIN, "command": "bvf"}
+    extra={"type": PluginType.NORMAL_PLUGIN, "command": "biliCard"}
 )
 
 
 @biliCard.handle()
 async def _handle(bot: Bot, event: Event, arg: Message = CommandArg()):
     headers = {
-        "User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) "
-                      "Chrome/107.0.0.0 Mobile Safari/537.36 Edg/107.0.1418.35 ",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                      "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0",
         "Referer": "https://www.bilibili.com/",
         "Accept": "application/json;charset=UTF-8"
+
     }
     input_arg = arg.extract_plain_text()
     matched_b23tv = re.findall("(?<=b23.tv/)\w*", input_arg)
@@ -49,7 +50,7 @@ async def _handle(bot: Bot, event: Event, arg: Message = CommandArg()):
     try:
         async with aiohttp.ClientSession(timeout=ClientTimeout(total=10)) as session:
             async with session.get(f"http://api.bilibili.com/x/web-interface/view?aid={aid}",
-                                   headers=headers, ) as response:
+                                   headers=headers) as response:
                 response_body = json.loads(
                     await response.text())["data"]
     except KeyError:
