@@ -29,11 +29,13 @@ async def _(bot: Bot, evt: MessageEvent, only_text=False, times=3):
             for item in result:
                 try:
                     await bot.send(evt, message=item)
+                    return
                 except ActionFailed:
                     logger.error(f"回复操作失败，正在尝试第{4 - times}次")
                     await _(bot, evt, only_text=True, times=times - 1)
                     return
         else:
             await bot.send(evt, message=result)
+            return
     else:
         return

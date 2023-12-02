@@ -64,10 +64,7 @@ async def get_close_matches(arg: str, lst: list) -> list:
 
 
 async def get_text_reply_result(text: str) -> MessageSegment | None:
-    if len(text.replace(" ", "")) == 0:
-        return None
-    else:
-        text.replace(" ", "")
+    text = text.replace(" ", "")
     keys = replies.keys()
     for key in keys:
         if text.find(key) != -1:
