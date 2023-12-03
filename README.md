@@ -9,6 +9,13 @@
 
 ## 使用 Docker 运行
 
+拉取镜像
+
+
+```bash
+docker pull ghcr.io/googujiang/miaobot-qq:latest
+```
+
 要使用 Docker 运行您的 `miaobot-qq`，请确保您已经拥有了最新的 Docker 镜像，并且已经准备好 `.env` 文件，其中包含了所有必要的环境变量。然后，运行以下命令：
 
 ```bash
