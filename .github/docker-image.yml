@@ -23,7 +23,7 @@ jobs:
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Convert repo name to lower case
       id: repo-name-lower
