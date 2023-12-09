@@ -1,4 +1,5 @@
-nonebot2[aiohttp]
-nonebot_adapter_qq
+nonebot-adapter-qq
 nonebot-adapter-onebot
-nonebot[httpx]
+nonebot2[websockets]
+nonebot2[httpx]
+nonebot2[aiohttp]
