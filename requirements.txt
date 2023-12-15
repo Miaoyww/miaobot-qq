@@ -3,3 +3,6 @@ nonebot-adapter-onebot
 nonebot2[websockets]
 nonebot2[httpx]
 nonebot2[aiohttp]
+pydantic~=1.10.13
+aiohttp~=3.9.1
+loguru~=0.7.2
