@@ -1,1 +1,2 @@
-from .plugin_type import PluginType
+from .plugin_type import *
+from .logger import *
