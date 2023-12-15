@@ -5,9 +5,10 @@ from nonebot.adapters.qq import *
 from nonebot.params import CommandArg
 from nonebot.plugin import on_command, PluginMetadata
 
+from src.service import logger
 from src.service.plugin_type import PluginType
 
-jrrp = on_command("jrrp", block=True,priority=1)
+jrrp = on_command("jrrp", block=True, priority=1)
 
 __plugin_meta__ = PluginMetadata(
     name='今日人品',
@@ -19,12 +20,13 @@ __plugin_meta__ = PluginMetadata(
 
 @jrrp.handle()
 async def _(bot: Bot, event: Event, arg: Message = CommandArg()):
-    qid = event.get_user_id
+    logger.auto(__plugin_meta__, event)
     session = event.get_session_id()
     id = session.split('_')[2]
     jrrp_num = get_jrrp(str(id))
     result = get_msg(jrrp_num)
     await bot.send(event, result)
+    logger.success(f"触发成功, 用户<u><e>{event.get_user_id()}</e></u>的结果是: {result}", command=__plugin_meta__.name)
 
 
 def rol(num: int, k: int, bits: int = 64):
